@@ -26,7 +26,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -249,18 +254,39 @@ fun SuperAndSubsScriptText(
     )
 }
 
+@Composable
+fun TextFields() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        var text by remember {
+            mutableStateOf("Type Here...")
+        }
+        TextField(
+            value = text,
+            onValueChange = { newText ->
+                text = newText
+            },
+            label = {
+                Text(
+                    text = "Please fill this input below",
+                    textDecoration = TextDecoration.Underline,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        )
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     BelajarComposeTheme {
         Column(modifier = Modifier.fillMaxSize()) {
-            ExpandableCard(
-                title = "My Title",
-                description = stringResource(
-                    id = R.string.desc_expand_card
-                )
-            )
+            TextFields()
         }
     }
 }
