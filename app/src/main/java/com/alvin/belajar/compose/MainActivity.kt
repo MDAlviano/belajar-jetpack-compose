@@ -3,6 +3,7 @@ package com.alvin.belajar.compose
 import android.os.Bundle
 import android.text.Selection
 import android.text.style.SuperscriptSpan
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -19,10 +20,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.DisableSelection
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -43,6 +52,8 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -61,12 +72,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BelajarComposeTheme {
                 Column(modifier = Modifier.fillMaxSize()) {
-                    ExpandableCard(
-                        title = "My Title",
-                        description = stringResource(
-                            id = R.string.desc_expand_card
-                        )
-                    )
+                    TextFields()
                 }
             }
         }
@@ -265,7 +271,7 @@ fun TextFields() {
         var text by remember {
             mutableStateOf("Type Here...")
         }
-        TextField(
+        OutlinedTextField(
             value = text,
             onValueChange = { newText ->
                 text = newText
@@ -276,7 +282,40 @@ fun TextFields() {
                     textDecoration = TextDecoration.Underline,
                     fontWeight = FontWeight.Bold
                 )
-            }
+            },
+            leadingIcon = {
+                IconButton(
+                    onClick = {
+
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Email,
+                        contentDescription = "Email Icon"
+                    )
+                }
+            },
+            trailingIcon = {
+                IconButton(
+                    onClick = {
+                        Log.d("TrailingIcon", "Checked")
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Check,
+                        contentDescription = "Email Icon"
+                    )
+                }
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Search
+            ),
+            keyboardActions = KeyboardActions(
+                onSearch = {
+                    Log.d("OnSearch", "Clicked")
+                }
+            )
         )
     }
 }
