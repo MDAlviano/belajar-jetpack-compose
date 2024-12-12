@@ -1,4 +1,4 @@
-package com.alvin.belajar.compose
+package com.alvin.belajar.compose.components
 
 import android.util.Log
 import androidx.compose.animation.animateContentSize
@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.alvin.belajar.compose.R
 import com.alvin.belajar.compose.ui.theme.Shapes
 
 @Composable

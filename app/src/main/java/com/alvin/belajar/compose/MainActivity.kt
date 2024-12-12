@@ -27,7 +27,9 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -40,10 +42,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
@@ -54,6 +59,8 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -64,15 +71,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.alvin.belajar.compose.components.CoilImage
 import com.alvin.belajar.compose.ui.theme.BelajarComposeTheme
+import java.util.Vector
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             BelajarComposeTheme {
-                Column(modifier = Modifier.fillMaxSize()) {
-                    TextFields()
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    PasswordTextFields()
                 }
             }
         }
@@ -320,12 +334,70 @@ fun TextFields() {
     }
 }
 
+@Composable
+fun PasswordTextFields() {
+    var password by rememberSaveable {
+        mutableStateOf("")
+    }
+    var passwordVisibility by remember {
+        mutableStateOf(false
+        )
+    }
+
+    val icon = if (passwordVisibility)
+        painterResource(id = R.drawable.ic_google_logo)
+    else
+        painterResource(id = R.drawable.ic_launcher_foreground)
+
+    OutlinedTextField(
+        value = password,
+        onValueChange = {
+            password = it
+        },
+        placeholder = {
+            Text(
+                text = "Password"
+            )
+        },
+        label = {
+            Text(
+                text = "Password"
+            )
+        },
+        trailingIcon = {
+            IconButton(
+                onClick = {
+                    passwordVisibility = !passwordVisibility
+                }
+            ) {
+                Icon(
+                    painter = icon,
+                    contentDescription = "Trailing Icon",
+                    tint = Color.Unspecified
+                )
+            }
+        },
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Password
+        ),
+        visualTransformation = if (passwordVisibility) {
+            VisualTransformation.None
+        } else {
+            PasswordVisualTransformation()
+        }
+    )
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     BelajarComposeTheme {
-        Column(modifier = Modifier.fillMaxSize()) {
-            TextFields()
+        Column(modifier = Modifier
+            .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            PasswordTextFields()
         }
     }
 }
