@@ -7,11 +7,13 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +21,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -72,6 +76,8 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alvin.belajar.compose.components.CoilImage
+import com.alvin.belajar.compose.components.CustomItem
+import com.alvin.belajar.compose.repository.PersonRepository
 import com.alvin.belajar.compose.ui.theme.BelajarComposeTheme
 import java.util.Vector
 
@@ -388,6 +394,50 @@ fun PasswordTextFields() {
     )
 }
 
+@Composable
+fun MyLazyColumn() {
+    val personRepository = PersonRepository()
+    val getAllData = personRepository.getAllData()
+
+    LazyColumn(
+        contentPadding = PaddingValues(all = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        items(items = getAllData) { person ->
+            CustomItem(person = person)
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun MyStickyHeader() {
+    val sections = listOf("A","B","C","D","E","F","G")
+
+    LazyColumn(
+        contentPadding = PaddingValues(all = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        sections.forEach { section ->
+            stickyHeader {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color.LightGray)
+                        .padding(12.dp),
+                    text = "Section $section"
+                )
+            }
+            items(10) {
+                Text(
+                    modifier = Modifier.padding(12.dp),
+                    text = "Item $it from the section $section"
+                )
+            }
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
@@ -397,7 +447,7 @@ fun GreetingPreview() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            PasswordTextFields()
+            MyLazyColumn()
         }
     }
 }
