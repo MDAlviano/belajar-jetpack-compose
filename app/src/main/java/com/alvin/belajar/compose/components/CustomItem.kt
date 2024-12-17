@@ -13,10 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.alvin.belajar.compose.model.Person
+import com.alvin.belajar.compose.model.Individual
 
 @Composable
-fun CustomItem(person: Person) {
+fun CustomItem(person: Individual) {
     Row(
         modifier = Modifier
             .background(Color.LightGray)
