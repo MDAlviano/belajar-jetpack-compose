@@ -423,6 +423,32 @@ fun MyStickyHeader() {
     }
 }
 
+@Composable
+fun MyCharCountLimitTextField() {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        var name by remember {
+            mutableStateOf("")
+        }
+        val maxLine = 10
+
+        OutlinedTextField(
+            value = name,
+            onValueChange = {
+                if (it.length <= maxLine) {
+                    name = it
+                }
+            },
+            label = { Text(text = "Name") },
+            placeholder = { Text(text = "Enter your name...") },
+            maxLines = 1
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
