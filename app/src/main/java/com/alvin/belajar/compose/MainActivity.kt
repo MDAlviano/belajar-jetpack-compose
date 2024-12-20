@@ -32,6 +32,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -71,14 +72,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BelajarComposeTheme {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    PasswordTextFields()
-                }
+
             }
         }
     }
@@ -449,16 +443,36 @@ fun MyCharCountLimitTextField() {
     }
 }
 
+@Composable
+fun MyCustomUIComponent() {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        var value by remember {
+            mutableStateOf(0)
+        }
+
+        TextField(
+            value = value.toString(),
+            onValueChange = {
+                value = if (it.isNotEmpty()) {
+                    it.toInt()
+                } else {
+                    0
+                }
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number
+            )
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     BelajarComposeTheme {
-        Column(modifier = Modifier
-            .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            MyLazyColumn()
-        }
+
     }
 }
