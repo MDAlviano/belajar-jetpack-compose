@@ -32,7 +32,9 @@ fun CustomComponent(
     indicatorValue: Int = 0,
     maxIndicatorValue: Int = 100,
     backgroundIndicatorColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-    backgroundIndicatorStrokeWidth: Float = 100f
+    backgroundIndicatorStrokeWidth: Float = 100f,
+    foregroundIndicatorColor: Color = MaterialTheme.colorScheme.primary,
+    foregroundIndicatorStrokeWidth: Float = 100f
 ) {
     Column(
         modifier = Modifier
@@ -43,6 +45,12 @@ fun CustomComponent(
                     componentSize = componentSize,
                     indicatorColor = backgroundIndicatorColor,
                     indicatorStrokeWidth = backgroundIndicatorStrokeWidth
+                )
+                foregroundIndicator(
+                    sweepAngle = 120f,
+                    componentSize = componentSize,
+                    indicatorColor = foregroundIndicatorColor,
+                    indicatorStrokeWidth = foregroundIndicatorStrokeWidth
                 )
             },
 
@@ -61,6 +69,29 @@ fun DrawScope.backgroundIndicator(
         color = indicatorColor,
         startAngle = 150f,
         sweepAngle = 240f,
+        useCenter = false,
+        style = Stroke(
+            width = indicatorStrokeWidth,
+            cap = StrokeCap.Square
+        ),
+        topLeft = Offset(
+            x = (size.width - componentSize.height) / 2f,
+            y = (size.height - componentSize.height) / 2f
+        )
+    )
+}
+
+fun DrawScope.foregroundIndicator(
+    sweepAngle: Float,
+    componentSize: Size,
+    indicatorColor: Color,
+    indicatorStrokeWidth: Float
+) {
+    drawArc(
+        size = componentSize,
+        color = indicatorColor,
+        startAngle = 150f,
+        sweepAngle = sweepAngle,
         useCenter = false,
         style = Stroke(
             width = indicatorStrokeWidth,
