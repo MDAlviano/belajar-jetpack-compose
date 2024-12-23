@@ -1,27 +1,25 @@
 package com.alvin.belajar.compose.components
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -36,6 +34,29 @@ fun CustomComponent(
     foregroundIndicatorColor: Color = MaterialTheme.colorScheme.primary,
     foregroundIndicatorStrokeWidth: Float = 100f
 ) {
+    var allowedIndicatorValue by remember {
+        mutableStateOf(maxIndicatorValue)
+    }
+    allowedIndicatorValue = if (indicatorValue <= maxIndicatorValue) {
+        indicatorValue
+    } else {
+        maxIndicatorValue
+    }
+
+    val animatedIndicatorValue = remember {
+        Animatable(initialValue = 0f)
+    }
+    LaunchedEffect(key1 = allowedIndicatorValue) {
+        animatedIndicatorValue.animateTo(allowedIndicatorValue.toFloat())
+    }
+
+    val percentage = (animatedIndicatorValue.value / maxIndicatorValue) * 100
+
+    val sweepAngle by animateFloatAsState(
+        targetValue = (2.4 * percentage).toFloat(),
+        animationSpec = tween(1000)
+    )
+
     Column(
         modifier = Modifier
             .size(canvasSize)
@@ -47,14 +68,14 @@ fun CustomComponent(
                     indicatorStrokeWidth = backgroundIndicatorStrokeWidth
                 )
                 foregroundIndicator(
-                    sweepAngle = 120f,
+                    sweepAngle = sweepAngle,
                     componentSize = componentSize,
                     indicatorColor = foregroundIndicatorColor,
                     indicatorStrokeWidth = foregroundIndicatorStrokeWidth
                 )
             },
 
-    ) {
+        ) {
 
     }
 }
