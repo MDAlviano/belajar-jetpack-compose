@@ -1,6 +1,5 @@
-package com.alvin.belajar.compose.components.navigation
+package com.alvin.belajar.compose.screens
 
-import android.telecom.Call.Details
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,10 +13,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.alvin.belajar.compose.Screen
+import com.alvin.belajar.compose.navigation.Screen
 
 @Composable
-fun DetailScreen(
+fun SignUpScreen(
     navController: NavHostController
 ) {
     Box(
@@ -26,14 +25,10 @@ fun DetailScreen(
     ) {
         Text(
             modifier = Modifier.clickable {
-                navController.navigate(route = Screen.Home.route) {
-                    popUpTo(Screen.Home.route) {
-                        inclusive = true
-                    }
-                }
+                navController.popBackStack()
             },
-            text = "Detail",
-            color = Color.Red,
+            text = "Sign Up",
+            color = Color.Magenta,
             fontSize = MaterialTheme.typography.headlineMedium.fontSize,
             fontWeight = FontWeight.Bold
         )
@@ -42,8 +37,8 @@ fun DetailScreen(
 
 @Composable
 @Preview(showBackground = true)
-fun DetailScreenPreview() {
-    DetailScreen(
+fun SignUpScreenPreview() {
+    HomeScreen(
         navController = rememberNavController()
     )
 }

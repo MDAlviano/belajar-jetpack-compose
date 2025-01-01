@@ -1,23 +1,24 @@
-package com.alvin.belajar.compose.components.navigation
+package com.alvin.belajar.compose.navigation.nav_graph
 
-import android.util.Log
-import androidx.compose.runtime.Composable
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
-import com.alvin.belajar.compose.DETAIL_ARGUMENT_KEY
-import com.alvin.belajar.compose.DETAIL_ARGUMENT_KEY2
-import com.alvin.belajar.compose.Screen
+import com.alvin.belajar.compose.navigation.DETAIL_ARGUMENT_KEY
+import com.alvin.belajar.compose.navigation.DETAIL_ARGUMENT_KEY2
+import com.alvin.belajar.compose.navigation.HOME_ROUTE
+import com.alvin.belajar.compose.navigation.Screen
+import com.alvin.belajar.compose.screens.DetailScreen
+import com.alvin.belajar.compose.screens.HomeScreen
 
-@Composable
-fun SetupNavGraph(
+fun NavGraphBuilder.homeNavGraph(
     navController: NavHostController
 ) {
-    NavHost(
-        navController = navController,
-        startDestination = Screen.Home.route
+    navigation(
+        startDestination = Screen.Home.route,
+        route = HOME_ROUTE
     ) {
         composable(
             route = Screen.Home.route
@@ -36,8 +37,6 @@ fun SetupNavGraph(
                 }
             )
         ) {
-            Log.d("Args", it.arguments?.getInt(DETAIL_ARGUMENT_KEY).toString())
-            Log.d("Args", it.arguments?.getString(DETAIL_ARGUMENT_KEY2).toString())
             DetailScreen(navController = navController)
         }
     }
