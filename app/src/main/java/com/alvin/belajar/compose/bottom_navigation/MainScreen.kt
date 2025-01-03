@@ -1,5 +1,6 @@
 package com.alvin.belajar.compose.bottom_navigation
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -29,6 +30,13 @@ fun BottomBar(navController: NavHostController) {
     val currentDestination = navBackStackEntry?.destination
 
     NavigationBar {
+        screens.forEach { screen ->
 
+        }
     }
+}
+
+@Composable
+fun RowScope.AddItem() {
+
 }
