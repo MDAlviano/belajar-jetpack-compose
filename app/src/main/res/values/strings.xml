@@ -3,4 +3,5 @@
     <string name="desc_expand_card">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam laudantium voluptatem quia ipsam ab obcaecati omnis totam, excepturi reiciendis officiis aliquam dignissimos a unde suscipit illo repellendus, itaque tempora nam nostrum inventore, similique quae saepe ad. Magnam sunt perferendis recusandae, iure odit vero dolores saepe debitis, architecto error similique maxime!</string>
     <string name="title_activity_my_navigation">MyNavigationActivity</string>
     <string name="title_activity_bottom_navigation">BottomNavigationActivity</string>
+    <string name="title_activity_search_widget_app_bar">SearchWidgetAppBarActivity</string>
 </resources>
