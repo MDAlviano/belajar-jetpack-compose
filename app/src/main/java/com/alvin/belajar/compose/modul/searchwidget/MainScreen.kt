@@ -1,5 +1,7 @@
 package com.alvin.belajar.compose.modul.searchwidget
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardActions
@@ -15,9 +17,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
@@ -26,17 +29,62 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlin.math.truncate
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen(mainViewModel: MainViewModel) {
+
+    val searchWidgetState by mainViewModel.searchWidgetState
+    val searchTextState by mainViewModel.searchTextState
+
     Scaffold(
         topBar = {
-            DefaultAppBar(
-
+            MainAppBar(
+                searchWidgetState = searchWidgetState,
+                searchTextState = searchTextState,
+                onTextChange = {
+                    mainViewModel.updateSearchTextState(newValue = it)
+                },
+                onCloseClicked = {
+                    mainViewModel.updateSearchTextState(newValue = "")
+                    mainViewModel.updateSearchWidgetState(newValue = SearchWidgetState.CLOSED)
+                },
+                onSearchClicked = {
+                    Log.d("Search Text", it)
+                },
+                onSearchTriggered = {
+                    mainViewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED)
+                }
             )
         }
     ) {}
+}
+
+@Composable
+fun MainAppBar(
+    searchWidgetState: SearchWidgetState,
+    searchTextState: String,
+    onTextChange: (String) -> Unit,
+    onCloseClicked: () -> Unit,
+    onSearchClicked: (String) -> Unit,
+    onSearchTriggered: () -> Unit
+) {
+    when (searchWidgetState) {
+        SearchWidgetState.CLOSED -> {
+            DefaultAppBar(
+                onSearchClicked = onSearchTriggered
+            )
+        }
+
+        SearchWidgetState.OPENED -> {
+            SearchAppBar(
+                text = searchTextState,
+                onTextChange = onTextChange,
+                onCloseClicked = onCloseClicked,
+                onSearchClicked = onSearchClicked
+            )
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -128,6 +176,10 @@ fun SearchAppBar(
                 onSearch = {
                     onSearchClicked(text)
                 }
+            ),
+            colors = TextFieldDefaults.colors(
+                Color.Transparent,
+                cursorColor = Color.White.copy(alpha = FontWeight.Medium.weight.toFloat())
             )
         )
     }
