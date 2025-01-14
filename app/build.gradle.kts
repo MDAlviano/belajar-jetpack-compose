@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("com.google.devtools.ksp") version "2.0.20-1.0.24"
 }
 
 android {
@@ -75,7 +74,6 @@ dependencies {
     // Room Db
     val room_version = "2.5.0"
     implementation("androidx.room:room-runtime:$room_version")
-    ksp("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-testing:$room_version")
 
     // Coroutines
