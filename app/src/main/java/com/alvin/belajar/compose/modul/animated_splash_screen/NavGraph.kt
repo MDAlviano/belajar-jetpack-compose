@@ -15,7 +15,7 @@ fun SetupNavGraph(navController: NavHostController) {
         startDestination = Screen.Splash.route
     ) {
         composable(route = Screen.Splash.route) {
-            AnimatedSplashScreen()
+            AnimatedSplashScreen(navController = navController)
         }
         composable(route = Screen.Home.route) {
             Box(modifier = Modifier.fillMaxSize())
