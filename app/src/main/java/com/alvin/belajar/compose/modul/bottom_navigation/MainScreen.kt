@@ -39,7 +39,11 @@ fun BottomBar(navController: NavHostController) {
 
     NavigationBar {
         screens.forEach { screen ->
-            AddItem(screen = screen, currentDestination = currentDestination, navController = navController)
+            AddItem(
+                screen = screen,
+                currentDestination = currentDestination,
+                navController = navController
+            )
         }
     }
 }

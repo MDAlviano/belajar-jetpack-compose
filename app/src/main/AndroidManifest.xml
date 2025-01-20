@@ -19,24 +19,12 @@
             android:name=".activity.AnimatedSplashScreenActivity"
             android:exported="true"
             android:label="@string/title_activity_animated_splash_screen"
-            android:theme="@style/Theme.BelajarCompose">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.BelajarCompose"/>
         <activity
             android:name=".activity.AnimatedShimmerActivity"
             android:exported="true"
             android:label="@string/title_activity_animated_shimmer"
-            android:theme="@style/Theme.BelajarCompose">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.BelajarCompose"/>
         <activity
             android:name=".activity.SearchWidgetAppBarActivity"
             android:exported="false"
@@ -44,9 +32,15 @@
             android:theme="@style/Theme.BelajarCompose" />
         <activity
             android:name=".activity.BottomNavigationActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_bottom_navigation"
-            android:theme="@style/Theme.BelajarCompose" />
+            android:theme="@style/Theme.BelajarCompose">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.MyNavigationActivity"
             android:exported="false"
